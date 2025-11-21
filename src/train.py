@@ -25,4 +25,49 @@ df['Risk'] = df['Risk'].replace({'bad':1,'good':0})
 X = df.drop('Risk',axis=1)
 y = df.Risk
 
-# Split in train / test data
+# On différencie selon le type de données de chaque feature
+num_features = ['Age','Job','Credit amount','Duration']
+cat_features = ['Sex','Housing','Purpose','checking_saving_accounts']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Définition des pipelines de transformation
+numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
+
+categorical_transformer = Pipeline(steps=[('onehot', OneHotEncoder(handle_unknown='ignore'))])
+
+# Combinaison des pré-traitements
+preprocessor = ColumnTransformer(transformers=[
+        ('num', numeric_transformer, num_features),
+        ('cat', categorical_transformer, cat_features)],
+    remainder='drop') # Supprime toutes les colonnes non listées
+
+# Construction du Pipeline complet
+classifier = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=10,
+    random_state=42,
+    class_weight='balanced' # Gère l'imbalance du dataset
+)
+
+full_pipeline = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('classifier', classifier)
+])
+
+# Entraînement
+print("Début de l'entraînement du pipeline...")
+full_pipeline.fit(X_train, y_train)
+print("Entraînement terminé.")
+
+# Évaluation (pour information)
+y_pred_proba = full_pipeline.predict_proba(X_test)[:, 1]
+roc_auc = roc_auc_score(y_test, y_pred_proba)
+print(f"Performance sur l'ensemble de test (ROC AUC) : {roc_auc:.4f}")
+
+# Sauvegarde du Pipeline complet (le modèle et le pré-traitement)
+os.makedirs(model_dir, exist_ok=True)
+model_path = os.path.join(model_dir, model_name)
+joblib.dump(full_pipeline, model_path)
+print(f"Pipeline complet sauvegardé dans : {model_path}")
