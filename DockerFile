@@ -1,0 +1,17 @@
+# Dockerfile
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copie et installe les dépendances (doit contenir fastapi, uvicorn, pandas, joblib)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copie le dossier 'app' complet (y compris le modèle .pkl)
+COPY app/ ./
+
+EXPOSE 8000
+
+# Lance l'API avec Uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

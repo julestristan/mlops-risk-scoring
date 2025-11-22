@@ -18,6 +18,8 @@ df = pd.read_csv("../datasets/german_credit_data.csv",index_col=0)
 df["checking_saving_accounts"] = df["Saving accounts"].combine_first(df["Checking account"])
 mode = df["checking_saving_accounts"].mode()[0]
 df['checking_saving_accounts'] = df['checking_saving_accounts'].fillna(mode)
+df["Credit_amount"] = df["Credit amount"].copy()
+df.drop('Credit amount',axis=1)
 df = df.drop(["Saving accounts","Checking account"],axis=1)
 df['Risk'] = df['Risk'].replace({'bad':1,'good':0})
 
@@ -26,7 +28,7 @@ X = df.drop('Risk',axis=1)
 y = df.Risk
 
 # On différencie selon le type de données de chaque feature
-num_features = ['Age','Job','Credit amount','Duration']
+num_features = ['Age','Job','Credit_amount','Duration']
 cat_features = ['Sex','Housing','Purpose','checking_saving_accounts']
 
 X_train, X_test, y_train, y_test = train_test_split(
