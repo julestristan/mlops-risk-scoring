@@ -1,12 +1,14 @@
 # app/main.py
 import joblib
+from pathlib import Path
 import pandas as pd
 from fastapi import FastAPI
 from schemas.input import CreditFeatures
 import os
 app = FastAPI(title="API de Scoring de Risque Crédit")
 # Le chemin est relatif au dossier 'app' dans le conteneur Docker
-MODEL_PATH = "model/model.pkl" 
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "model" / "model.pkl"
 
 # Chargement du modèle/pipeline au démarrage de l'API
 try:
