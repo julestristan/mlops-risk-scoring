@@ -1,0 +1,14 @@
+# .dockerignore
+
+# Ignorer le dossier git
+.git
+.gitignore
+
+# Ignorer les dossiers et fichiers de cache/environnement
+__pycache__
+venv/
+.env
+
+# Ignorer les fichiers de logs ou temporaires
+*.log
+tmp/
