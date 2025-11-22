@@ -24,3 +24,5 @@ docker logs risk-api
 # Check statut conteneur
 docker ps
 ```
+
+Test deployment
