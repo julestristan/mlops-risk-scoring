@@ -30,3 +30,5 @@ Performance pour un modèle de gradient boosting classifier -> ROC AUC: 0.6876
 
 Difficulté: plateau de l'amélioration du modèle
     -> travail de feature engineering pour avoir des meilleurs entrées
+    -> peut etre reprendre les deux features de base au lieu de merge en une
+        -> reprendre saving et checking au lieu de merge en checking_saving_accounts
