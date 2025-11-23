@@ -19,7 +19,7 @@ df["checking_saving_accounts"] = df["Saving accounts"].combine_first(df["Checkin
 mode = df["checking_saving_accounts"].mode()[0]
 df['checking_saving_accounts'] = df['checking_saving_accounts'].fillna(mode)
 df["Credit_amount"] = df["Credit amount"].copy()
-df.drop('Credit amount',axis=1)
+df = df.drop('Credit amount',axis=1)
 df = df.drop(["Saving accounts","Checking account"],axis=1)
 df['Risk'] = df['Risk'].replace({'bad':1,'good':0})
 
