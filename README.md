@@ -25,4 +25,8 @@ docker logs risk-api
 docker ps
 ```
 
-Test deployment
+Performance pour un modèle de random forest classifier -> ROC AUC: 0.6321
+Performance pour un modèle de gradient boosting classifier -> ROC AUC: 0.6876
+
+Difficulté: plateau de l'amélioration du modèle
+    -> travail de feature engineering pour avoir des meilleurs entrées
