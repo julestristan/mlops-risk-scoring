@@ -2,7 +2,7 @@
 
 ## Project: Risk scoring of the clients of a bank
 
-### Placeholder
+### ROC AUC of .68 despite the use of different methods (XGBoost, Random Forest)
 
 **for libraries: uv pip install -r requirements.txt**
 
